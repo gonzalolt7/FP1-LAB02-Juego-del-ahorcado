@@ -30,8 +30,22 @@ def normalizar(cadena):
     Devuelve:
       Cadena de texto con la palabra normalizada
     """
-    # TODO: Implementa esta función (y elimina la instrucción pass)
-    pass
+    cadena = cadena.lower().strip()
+    res = ""
+    for c in cadena:
+        if c == "á" or c == "ä": # c in "áä" tambien vale
+            res += "a"
+        elif c in "éë":
+            res += "e"
+        elif c in "íï":
+            res += "i"
+        elif c in "úü":
+            res += "u"
+        elif c in "óö":
+            res += "o"
+        else:
+            res += c
+    return res
 
 def ocultar(palabra_secreta, letras_usadas=""):
     '''Devuelve una cadena de texto con la palabra enmascarada. 
@@ -44,9 +58,13 @@ def ocultar(palabra_secreta, letras_usadas=""):
     Devuelve:
       Cadena de texto con la palabra enmascarada
     '''
-    # TODO: Implementa esta función (y elimina la instrucción pass)
-    pass
-
+    palabra_oculta=""
+    for k in palabra_secreta:
+        if k in letras_usadas:
+            palabra_oculta += k
+        else:
+            palabra_oculta += "_"
+    return palabra_oculta
 
 def ha_ganado(palabra_enmascarada):
     '''Devuelve True si el jugador ha ganado (es decir, si no quedan letras por descubrir en la palabra enmascarada).
@@ -57,14 +75,34 @@ def ha_ganado(palabra_enmascarada):
     Devuelve:
     - True si el jugador ha ganado, False en caso contrario
     '''
-    # TODO: Implementa esta función (y elimina la instrucción pass)
-    pass
+    if "_" in palabra_enmascarada: 
+        return False 
+    else:
+       return True
+    
+def mostrar_estado(palabra_enmascarada,letras_usadas,intentos_restantes):
+    print(f'Estado: {"".join(palabra_enmascarada)}')
+    if len(letras_usadas) == 0:
+        print(f"Letras usadas: ninguna")
+    else: 
+        print(f"Letras usadas: {letras_usadas}")
+
+    print(f"Le quedan: {intentos_restantes}")
+    
+    return mostrar_estado
+
+def pedir_letra(letras_usadas):
+    letra=input("Introduzca una letra: ")
+    if len(letra)>1:
+        print("debes poner una sola letra")
+    elif letra.isdigit():
+        print("debe ser una una letra")
+    elif letra in letras_usadas:
+        print("esa letra ya la has usado")
+    while len(letra)>1 or letra.isalpha() or letra == letras_usadas:
+        letra
+    return letra
 
 
-# TODO: Implementa la función mostrar_estado
+    
 
-# TODO: Implementa la función pedir_letra
-
-# TODO: Implementa la función jugar
-
-# TODO: Escribe el programa principal
