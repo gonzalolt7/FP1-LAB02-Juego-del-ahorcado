@@ -93,16 +93,41 @@ def mostrar_estado(palabra_enmascarada,letras_usadas,intentos_restantes):
 
 def pedir_letra(letras_usadas):
     letra=input("Introduzca una letra: ")
-    if len(letra)>1:
-        print("debes poner una sola letra")
-    elif letra.isdigit():
-        print("debe ser una una letra")
-    elif letra in letras_usadas:
-        print("esa letra ya la has usado")
-    while len(letra)>1 or letra.isalpha() or letra == letras_usadas:
-        letra
+    while len(letra)>1 or letra.isdigit() or letra in letras_usadas:
+        if len(letra)>1:
+            print("debes poner una sola letra")
+        elif letra.isdigit():
+            print("debe ser una una letra")
+        elif letra in letras_usadas:
+            print("esa letra ya la has usado")
+        letra=input("Introduzca una letra: ")
     return letra
 
+def jugar(palabra_secreta,max_intentos=6):
+    palabra_original=normalizar(palabra_secreta)
+    if len(palabra_original)<1:
+        print("none")
+        return 
+    intentos=0
+    letras_usadas=""
+    palabra_oculta=ocultar(palabra_original,letras_usadas)
+    while intentos<max_intentos and not ha_ganado(palabra_oculta):
+        mostrar_estado(palabra_oculta,letras_usadas,intentos_restantes=max_intentos-intentos)
+        letra= pedir_letra(letras_usadas)
+        if letra not in palabra_original:
+            print("No esta en la palabra secreta")
+            intentos=intentos+1
+        else:
+            print("Si pertenece a la palabra secreta")
+        letras_usadas += letra
+        palabra_oculta=ocultar(palabra_original,letras_usadas)
+    
+    if ha_ganado(palabra_oculta):
+        print(f"¡Has ganado! La palabra era '{palabra_original}'")
+    else:
+        print(f"Has perdido. La palabra era '{palabra_original}'")
+
+    return palabra_secreta
 
     
-
+        
